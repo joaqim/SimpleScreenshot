@@ -1,0 +1,9 @@
+build
+build-linux
+build-win
+*.cpp~
+*.h~
+.ccls-cache
+compile_commands.json
+src2
+.ycm_extra_conf.py
