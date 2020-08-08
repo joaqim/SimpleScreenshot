@@ -1,4 +1,4 @@
-find_package( OpenCV 4 REQUIRED)
+find_package( OpenCV REQUIRED)
 
 add_executable(test_runner ScreenshotTest.cpp)
 

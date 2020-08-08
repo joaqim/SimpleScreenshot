@@ -10,23 +10,23 @@
 # define SCREENSHOT_IMPL ScreenshotLinux
 #endif
 
-namespace sh {
-  Screenshot::Screenshot(int const x_, int const y_, int const w_, int const h_) : x(x_), y(y_), width(w_), height(h_)
-  {
-    mImpl = new SCREENSHOT_IMPL(x_, y_, w_, h_);
-  }
-  Screenshot::~Screenshot()
-  {
-    delete mImpl;
-    mImpl = 0;
-  }
-  void* Screenshot::operator()() {
-    return mImpl->takeScreenshot();
-  }
-  void* Screenshot::takeScreenshot() {
-    return mImpl->takeScreenshot();
-  }
-  void Screenshot::setCrop(std::pair<int,int> const &resolution_, int const x_, int const y_) {
-    //mImpl->setCrop(resolution_, x_, y_);
-  }
- }
+Screenshot::Screenshot(int const x_, int const y_, int const w_, int const h_) : x(x_), y(y_), width(w_), height(h_)
+{
+  mImpl = new SCREENSHOT_IMPL(x_, y_, w_, h_);
+}
+Screenshot::~Screenshot()
+{
+  delete mImpl;
+  mImpl = 0;
+}
+void* Screenshot::operator()() {
+  return mImpl->takeScreenshot();
+}
+void* Screenshot::takeScreenshot() {
+  return mImpl->takeScreenshot();
+}
+/*
+   void Screenshot::setCrop(std::pair<int,int> const &resolution_, int const x_, int const y_) {
+//mImpl->setCrop(resolution_, x_, y_);
+}
+*/

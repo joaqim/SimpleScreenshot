@@ -14,13 +14,11 @@
 #	define SCREENSHOT_PLATFORM SCREENSHOT_PLATFORM_LINUX
 #endif
 
-namespace sh {
-  class ScreenshotImpl {
-public:
-  ScreenshotImpl(int const x_, int const y_, int const w_, int const h_) : mX(x_), mY(y_), mW(w_), mH(h_) {}
-  virtual ~ScreenshotImpl(){}
-  virtual void* takeScreenshot() = 0;
-  int mX, mY, mW, mH;
-  bool mInit;
-  };
-}
+class ScreenshotImpl {
+  public:
+    ScreenshotImpl(int const x_, int const y_, int const w_, int const h_) : mX(x_), mY(y_), mW(w_), mH(h_) {}
+    virtual ~ScreenshotImpl(){}
+    virtual void* takeScreenshot() = 0;
+    int mX, mY, mW, mH;
+    bool mInit;
+};

@@ -30,7 +30,7 @@ fi
 function copydeps
 {
         depfilename=$(basename "${1}")
-        strings "${1}" | awk '{temp=tolower($0)} temp ~ /^([^\ ])*\.dll$/ && !/^'${depfilename,,}'$/ { print $0 }' | while read dll
+        strings "${1}" | awk '{temp=tolower($0)} temp ~ /^([^ ])*\.dll$/ && !/^'${depfilename,,}'$/ { print $0 }' | while read dll
         do
                 destname=${COPYTO}/$(basename "${dll}")
                 [ -f "${destname}" ] && continue

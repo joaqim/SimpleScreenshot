@@ -5,48 +5,43 @@
 #include <stdio.h>
 #include <algorithm>
 
-namespace sh
-{
-  ScreenshotLinux::ScreenshotLinux(int const x_, int const y_, int const w_, int const h_) : ScreenshotImpl(x_,y_,w_,h_) {
-    mDisplay = XOpenDisplay(nullptr);
-    mRoot = DefaultRootWindow(mDisplay);
+ScreenshotLinux::ScreenshotLinux(int const x_, int const y_, int const w_, int const h_) : ScreenshotImpl(x_,y_,w_,h_) {
+  mDisplay = XOpenDisplay(nullptr);
+  mRoot = DefaultRootWindow(mDisplay);
 
-    XGetWindowAttributes(mDisplay, mRoot, &mWindow_attributes);
-    mScreen = mWindow_attributes.screen;
-    mXimg = XShmCreateImage(mDisplay, DefaultVisualOfScreen(mScreen), DefaultDepthOfScreen(mScreen), ZPixmap, NULL, &mShminfo, mW, mH);
+  XGetWindowAttributes(mDisplay, mRoot, &mWindow_attributes);
+  mScreen = mWindow_attributes.screen;
+  //TODO: Maybe add support for defaulting to Fullscreen screenshots
+  mXimg = XShmCreateImage(mDisplay, DefaultVisualOfScreen(mScreen), DefaultDepthOfScreen(mScreen), ZPixmap, NULL, &mShminfo, mW, mH);
 
-    mShminfo.shmid = shmget(IPC_PRIVATE, mXimg->bytes_per_line * mXimg->height, IPC_CREAT|0777);
-    mShminfo.shmaddr = mXimg->data = (char*)shmat(mShminfo.shmid, 0, 0);
-    mShminfo.readOnly = False;
-    if(mShminfo.shmid < 0) puts("Fatal shminfo error!");
-    Status s1 = XShmAttach(mDisplay, &mShminfo);
+  mShminfo.shmid = shmget(IPC_PRIVATE, mXimg->bytes_per_line * mXimg->height, IPC_CREAT|0777);
+  mShminfo.shmaddr = mXimg->data = (char*)shmat(mShminfo.shmid, 0, 0);
+  mShminfo.readOnly = False;
+  if(mShminfo.shmid < 0) puts("Fatal shminfo error!");
+  Status s1 = XShmAttach(mDisplay, &mShminfo);
 #ifdef DEBUG
-    printf("XShmAttach() %s\n", s1 ? "success!" : "failure!");
+  printf("XShmAttach() %s\n", s1 ? "success!" : "failure!");
 #endif
 
-    mInit = true;
-  };
+  mInit = true;
+};
 
-  ScreenshotLinux::~ScreenshotLinux() {
-    mInit = false;
+ScreenshotLinux::~ScreenshotLinux() {
+  mInit = false;
 
-    //if(data) free(data);
-    XDestroyImage(mXimg);
-    XShmDetach(mDisplay, &mShminfo);
-    shmdt(mShminfo.shmaddr);
-    XCloseDisplay(mDisplay);
-  };
+  XDestroyImage(mXimg);
+  XShmDetach(mDisplay, &mShminfo);
+  shmdt(mShminfo.shmaddr);
+  XCloseDisplay(mDisplay);
+};
 
-  void* ScreenshotLinux::takeScreenshot() {
-    XShmGetImage(mDisplay, mRoot, mXimg, mX, mY, 0x00ffffff);
-    //if(data) free(data);
-    //data = malloc((sizeof(unsigned char) * mW*mH*4));
-    data = mXimg->data;
-    return data;
-  };
+void* ScreenshotLinux::takeScreenshot() {
+  XShmGetImage(mDisplay, mRoot, mXimg, mX, mY, 0x00ffffff);
+  data = mXimg->data;
+  return data;
+};
 
-  void setCrop(std::pair<int,int> const &resolution_, int const x_, int const y_) {
-  };
+void setCrop(std::pair<int,int> const &resolution_, int const x_, int const y_) {
+};
 
-}
 #endif

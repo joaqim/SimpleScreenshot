@@ -5,23 +5,20 @@
 
 #include <windows.h>
 
-namespace sh {
-  class ScreenshotWin32 : public ScreenshotImpl {
-    public:
-      ScreenshotWin32(int const x_, int const y_, int const w_, int const h_);
-      virtual ~ScreenshotWin32();
-      void* takeScreenshot();
-    public:
-      int x,y,w,h;
-    private:
-      bool init = false;
-      void *data;
-#if 0
-      HDC     hScreen;
-      HDC     hDC;
-      HBITMAP hBitmap;
-      HGDIOBJ old_obj;
-#endif
-  };
-}
+class ScreenshotWin32 : public ScreenshotImpl {
+  public:
+    ScreenshotWin32(int const x_, int const y_, int const w_, int const h_);
+    virtual ~ScreenshotWin32();
+    void* takeScreenshot();
+  public:
+    int x,y,w,h;
+  private:
+    bool init = false;
+    void *data;
+
+    HDC hwindowDC,hwindowCompatibleDC;
+
+    HBITMAP hbwindow;
+    BITMAPINFOHEADER  bi;
+};
 #endif
