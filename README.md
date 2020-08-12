@@ -9,7 +9,16 @@ The `Screenshot` class returns Raw Image data when called with `operator()` or `
 This Raw Image can then be used to create a desired image object.
 e.g: `cv::Mat` (see [Usage](#usage)).
 
-You can get image from `Screenshot` member variables: `width` and `height`.
+The raw image data is a 2-dimensional array containing one `uchar` element per channel, representing (R, G, B, A) of the pixel at that point:
+
+```
+  *img_data[x][y][0] = (uchar)255; // (RED)
+  *img_data[x][y][1] = (uchar)255; // (GREEN)
+  *img_data[x][y][2] = (uchar)255; // (BLUE)
+  *img_data[x][y][3] = (uchar)0;   // (ALPHA)
+```
+
+You can get `width` and `height` from `Screenshot` member variables.
 
 SimpleScreenshot is compatible with Linux and Windows ( only tested cross-compiling with mingw and running with Wine.)
 
@@ -84,7 +93,7 @@ int main() {
 ```
 
 Requires OpenCV:
- 
+
 `sudo pacman -S opencv`
 
 or
