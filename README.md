@@ -11,7 +11,7 @@ e.g: `cv::Mat` (see [Usage](#usage)).
 
 The raw image data is a 2-dimensional array containing one `uchar` element per channel, representing (R, G, B, A) of the pixel at that point:
 
-```
+```cpp
   *img_data[x][y][0] = (uchar)255; // (RED)
   *img_data[x][y][1] = (uchar)255; // (GREEN)
   *img_data[x][y][2] = (uchar)255; // (BLUE)
@@ -28,11 +28,13 @@ Prerequisites
 * X11, xshm ( for Linux )
 
 Arch Linux:
-    ``` sudo pacman -S libx11 libxext
+    ```
+    sudo pacman -S libx11 libxext
     ```
 
 Ubuntu:
-    ``` sudo apt-get install libx11-dev libxext-dev
+    ```
+    sudo apt-get install libx11-dev libxext-dev
     ```
 
 Usage
@@ -40,7 +42,7 @@ Usage
 
 * CMakeLists:
 
-```
+```cmake
     add_subdirectory(simplescreenshot)
     include_directories(simplescreenshot/include)
     target_link_libraries(
@@ -49,7 +51,7 @@ Usage
 ```
 
 * C++
-```
+```cpp
     #include <Screenshot/Screenshot.h>
 
     // This just initializes the screenshoter
@@ -63,7 +65,7 @@ Usage
 Build Test
 ==========
 The test is very simple:
-```
+```cpp
 #include <Screenshot/Screenshot.h>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -94,11 +96,11 @@ int main() {
 
 Requires OpenCV:
 
-`sudo pacman -S opencv`
+```sudo pacman -S opencv```
 
 or
 
-`sudo apt-get install libopencv-dev`
+```sudo apt-get install libopencv-dev```
 
 Build with:
 ```
