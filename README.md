@@ -43,8 +43,8 @@ Usage
 * CMakeLists:
 
 ```cmake
-    add_subdirectory(simplescreenshot)
-    include_directories(simplescreenshot/include)
+    add_subdirectory(SimpleScreenshot)
+    include_directories(SimpleScreenshot/include)
     target_link_libraries(
         ${EXECUTABLE}
         simplescreenshot)
