@@ -1,10 +1,10 @@
 SimpleScreenshot
 ================
-A library I created for a need in my OCR projects.
+A small library I created for a need in my OCR projects.
 
-The `Screenshot` class initializes an area of the screen `(x, y, width, height)` where it is expected to take frequent screenshots (see [Usage](#usage)).
+The `Screenshot` class stores an area of the screen `(x, y, width, height)` where it is expected to take frequent screenshots (see [Usage](#usage)).
 
-The `Screenshot` class returns Raw Image data when called with `operator()` or `takeScreenshot().`
+The `Screenshot` class returns Raw Image data of that area when called with `operator()` or `takeScreenshot().`
 
 This Raw Image can then be used to create a desired image object.
 e.g: `cv::Mat` (see [Usage](#usage)).
@@ -18,7 +18,7 @@ The raw image data is a 2-dimensional array containing one `uchar` element per c
   *img_data[x][y][3] = (uchar)0;   // (ALPHA)
 ```
 
-You can get `width` and `height` from `Screenshot` member variables.
+You can get `width` and `height` from `Screenshot` class members.
 
 SimpleScreenshot is compatible with Linux and Windows ( only tested cross-compiling with mingw and running with Wine.)
 
@@ -54,17 +54,17 @@ Usage
 ```cpp
     #include <Screenshot/Screenshot.h>
 
-    // This just initializes the screenshoter
+    // This is just initialization of the area where you would take screenshots
     Screenshot screenshot{x, y, width, height};
-    // Takes the screenshot and return raw Image data  width*height*(8bits RGBA)
-    void *data = screen(); // or .takeScreenshot();
+    // Takes the screenshot and returns raw Image data  width*height*(8bits RGBA)
+    void *data = screen(); // or screen.takeScreenshot();
 
     // Creating a OpenCV Matrix ( 8bit RGBA Image)
     cv::Mat img = cv::Mat(screen.height, screen.width, CV_8UC4, (unsigned char*)data);
 ```
 Build Test
 ==========
-The test is very simple:
+A very simple test:
 ```cpp
 #include <Screenshot/Screenshot.h>
 #include <opencv2/core.hpp>
@@ -78,7 +78,7 @@ int main() {
     sh::Screenshot screen{100, 100, 100, 100};
 
     // Grab screenshot
-    void *data = screen(); // or screen.takeScreenshot()
+    void *data = screen();
 
     // Create cv::Mat 8bit RGBA
     cv::Mat img = cv::Mat(screen.height, screen.width, CV_8UC4, (unsigned char*)data);
