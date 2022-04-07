@@ -56,6 +56,7 @@ Usage
 
     // This is just initialization of the area where you would take screenshots
     Screenshot screenshot{x, y, width, height};
+    
     // Takes the screenshot and returns raw Image data  width*height*(8bits RGBA)
     void *data = screenshot(); // or screenshoot.takeScreenshot();
 
@@ -79,6 +80,8 @@ int main() {
 
     // Grab screenshot
     void *data = screen();
+    // or alternatively:
+    // void *data = screen.takeScreenshot();
 
     // Create cv::Mat 8bit RGBA
     cv::Mat img = cv::Mat(screen.height, screen.width, CV_8UC4, (unsigned char*)data);
